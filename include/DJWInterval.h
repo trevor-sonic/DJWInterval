@@ -1,3 +1,8 @@
+//
+//  DJWInterval
+//  Created by DejaWorks on 22/07/2020.
+//  Copyright © 2020 dejaWorks. All rights reserved.
+//
 #ifndef DJWINTERVAL_H
 #define DJWINTERVAL_H
 
