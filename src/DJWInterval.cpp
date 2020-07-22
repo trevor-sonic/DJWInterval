@@ -13,8 +13,6 @@ DJWInterval::DJWInterval()
 	// _enable		=	true;
 
 	// (void*)_functionHandler;
-
-
 }
 DJWInterval::~DJWInterval()
 {
@@ -22,14 +20,14 @@ DJWInterval::~DJWInterval()
 }
 void DJWInterval::start()
 {
-	_lastMillis	=	millis();
-	_running	=	true;
-	_currStatus	=	false;
-	_currTime	=	_times;
+	_lastMillis = millis();
+	_running = true;
+	_currStatus = false;
+	_currTime = _times;
 }
 void DJWInterval::stop()
 {
-	_running	=	false;
+	_running = false;
 }
 void DJWInterval::restart()
 {
@@ -38,21 +36,40 @@ void DJWInterval::restart()
 }
 void DJWInterval::loop()
 {
-    if ( _running && _enable && _functionHandler && (_currTime>0 || _times==0) && (millis() >= _lastMillis + _delay) )
-    {
-    	_lastMillis	=	millis();
-		if(_currTime>0)_currTime--;
+	if (_running && _enable && _functionHandler && (_currTime > 0 || _times == 0) && (millis() >= _lastMillis + _delay))
+	{
+		_lastMillis = millis();
+		if (_currTime > 0)
+			_currTime--;
 
 		_functionHandler();
-    }
+	}
 }
 void DJWInterval::setDelay(unsigned long delay, unsigned int times)
 {
-	_delay	= delay;
-	_times	= times;
-	_currTime	= _times;
+	_delay = delay;
+	_times = times;
+	_currTime = _times;
 }
 void DJWInterval::setFunction(callbackFunction theFunction)
 {
-	_functionHandler	=   theFunction;
+	_functionHandler = theFunction;
+}
+
+DJWInterval &DJWInterval::mSeconds(unsigned long delay)
+{
+	_delay = delay;
+	return *this;
+}
+/// Howmany times should repeat (0 = infinite)
+DJWInterval &DJWInterval::repeat(unsigned int times)
+{
+	_times = times;
+	_currTime = _times;
+	return *this;
+}
+DJWInterval &DJWInterval::call(callbackFunction theFunction)
+{
+	this->_functionHandler = theFunction;
+	return *this;
 }
